@@ -1,8 +1,5 @@
 import React, { useState, useMemo } from 'react'
 import { useParams } from 'react-router-dom'
-import 'bootstrap/dist/css/bootstrap.min.css'
-import Form from 'react-bootstrap/Form'
-
 
 import api from '../../services/api'
 
@@ -15,8 +12,7 @@ export default function NewObjective( { history } ){
     const [ loadingState, setLoadingState] = useState(false)
     
     const [ thumbnail, setThumbnail] = useState(null)
-    const [ text, setText ] = useState('')
-    const [ correct_answer , setCorrect_answer] = useState(false)
+    const [ statement, setStatement ] = useState('')
 
     const { id } = useParams()
 
@@ -36,15 +32,15 @@ export default function NewObjective( { history } ){
         let data = new FormData()
 
         data.set("thumbnail", thumbnail)
-        data.set("text", text)
+        data.set("statement", statement)
         data.set("question_type", "obj")
-        data.set("correct_answer", correct_answer)
         
-        await api.post('/activities/update/' + id, data)
+        const activity = await api.post('/activities/new', data, {
+            headers: {"module_id": id }
+        })
 
-        window.location.reload()
+        history.push('/objective/alternative/' + activity.data._id)
     }
-
 
     return (
         <form onSubmit={handleSubmit}>
@@ -58,21 +54,12 @@ export default function NewObjective( { history } ){
 
             </label>
             
-            <label htmlFor="statement">TEXTO DA ALTERNATIVA</label>
+            <label htmlFor="statement">ENUNCIADO *</label>
             <input id='enunciado'
-            placeholder='Deixe em branco se não existir'
-            value={text}
-            onChange = {event => setText(event.target.value)}
+            placeholder='A pergunta da questão'
+            value={statement}
+            onChange = {event => setStatement(event.target.value)}
             />
-
-            <Form.Group controlId="formBasicCheckbox">
-                <Form.Check 
-                type="checkbox" label="Resposta Correta?"
-                value={correct_answer}
-                onChange = {event => {
-                    setCorrect_answer(!correct_answer)
-                    }}/>
-            </Form.Group>
 
             <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
                 { loadingState ? "Cadastrando . . ."  : "Cadastrar" }

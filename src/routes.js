@@ -12,16 +12,20 @@ import NewAlternative from './pages/New_Alternative'
 import NewDictionaryItem from './pages/New_Dictionary_Item'
 import NewLibraryItem from './pages/New_Library_Item'
 import NewModule from './pages/New_Module'
+import NewObjective from './pages/New_Objective'
+import NewSubjective from './pages/New_Subjective'
 
 export default function Routes(){
     return (
       <BrowserRouter>
-      
+
         <Switch>
           <Route path='/' exact component={Home} />
-          <Route path='/activities'exact component={ActivityList} />
-          <Route path='/activities/new' component={NewActivity} />
-          <Route path='/activities/alternative'component={NewAlternative} />
+          <Route path='/activities/:id'exact component={ActivityList} />
+          <Route path='/activities/:id/new' exact component={NewActivity} />
+          <Route path='/subjective/new/:id' exact component={NewSubjective} />
+          <Route path='/objective/new/:id' exact component={NewObjective} />
+          <Route path='/objective/alternative/:id'component={NewAlternative} />
           <Route path='/dictionary'exact component={DictionaryList} />
           <Route path='/dictionary/new'component={NewDictionaryItem} />
           <Route path='/module'exact component={ModuleList} />

@@ -1,6 +1,39 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { Link } from 'react-router-dom'
+import api from "../../services/api"
 
-export default function ModuleList(){
+import './styles.css'
 
-    return <div/>
+export default function ModuleList({ history }){
+
+    const [modules, setModules] = useState([])
+    
+    useEffect(()=> {
+        async function loadModules(){
+            const response = await api.get('/modules')
+
+            setModules(response.data)           
+        }
+
+        loadModules()
+    }, [] )
+  
+    function openModule(id){
+
+        history.push("/activities/" + id);
+    }
+    return (
+        <>
+            <ul className= 'module-list'>
+                {modules.map(module => (
+                    <li onClick={() => {openModule(module._id)}} key={module._id}>
+                        <strong>{module.name}</strong>
+                        <span>{module.description}</span>
+                    </li>
+                ))}
+            </ul>
+
+            <Link to="/module/new"><button className='btn'>Cadastrar novo módulo</button></Link>
+        </>
+    )
 }

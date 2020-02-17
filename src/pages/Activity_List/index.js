@@ -27,7 +27,7 @@ export default function ActivityList( { history }){
                 {activities.map(activity => (
                     <li key={activity._id}>
                         <header style = {{
-                            backgroundImage: `url(${activity.location})` }}></header>
+                            backgroundImage: `url(${activity.statement_image})` }}></header>
                         <strong>{activity.statement}</strong>
                         <span>{activity.expected_answer  
                             ?<span className="expected_answer">

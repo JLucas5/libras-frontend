@@ -24,6 +24,8 @@ export default function ModuleList({ history }){
     }
     return (
         <>
+            <Link to="/module/new"><button className='btn'>Cadastrar novo módulo</button></Link>
+
             <ul className= 'module-list'>
                 {modules.map(module => (
                     <li onClick={() => {openModule(module._id)}} key={module._id}>
@@ -33,7 +35,6 @@ export default function ModuleList({ history }){
                 ))}
             </ul>
 
-            <Link to="/module/new"><button className='btn'>Cadastrar novo módulo</button></Link>
         </>
     )
 }

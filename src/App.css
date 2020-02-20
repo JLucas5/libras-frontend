@@ -17,7 +17,7 @@ body {
   -webkit-font-smoothing: antialiased !important;
 }
 
-Nav, body, inputs, button {
+Nav, body, input, button {
   font-family: 'Roboto', Arial, Helvetica, sans-serif;
   font-size: 14px;
 }

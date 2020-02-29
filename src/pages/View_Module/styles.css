@@ -1,0 +1,47 @@
+h4 {
+    font-weight: bold;
+    color: rgba(0, 0, 0, 0.701) ;
+}
+
+h5 {
+    font-weight: bold;
+    color: #999;
+}
+
+button.btn{
+    border-radius: 4px !important;
+    margin-top: 30px;
+    margin-bottom: 30px;
+}
+
+button#excluir{
+    background: rgb(207, 44, 44) ;
+}
+
+button#editar{
+    background: rgb(190, 165, 49);
+}
+
+button.excluiratv{
+    align-self: center;
+    border: 0;
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    background: rgb(207, 44, 44) ;
+}
+
+button.editaratv{
+    align-self: center;
+    border: 0;
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    background: rgb(190, 165, 49);
+}

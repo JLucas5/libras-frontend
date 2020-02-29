@@ -6,15 +6,11 @@ ul.dictionary-list {
     grid-gap: 20px;
     margin-bottom: 30px;
 }
-ul.dictionary-list li header {
-    width: auto;
-    height: 250px;
-    background-size: cover;
-    border-radius: 4px; 
-}
 
 ul.dictionary-list > li {
+    margin-top: 10px;
     display: flex;
+    align-items: stretch;
     flex-direction: column;
     border-style: solid;
     border-radius: 5px;
@@ -24,52 +20,30 @@ ul.dictionary-list > li {
 }
 
 ul.dictionary-list li strong {
-    align-self: center;
-    margin-bottom: 3%;
+    align-self: flex-start;
+    margin-left: 2%;
     font-size: 24px;
     color: #444;
 }
-
-ul.dictionary-list li span {
-    font-size: 15px;
-    color: #999;
+ul.dictionary-list li button {
+    max-width: 46%;
+    max-height: 25px;
+    border-radius: 4px !important;
+    margin-left: 2%;
+    margin-right: 2%;
+    font-size: 24px;
+    margin-bottom: -15px;
 }
 
-ul.alternatives {
-    width: 100%;
-    list-style: none;
-    display: grid;
-    grid-template-columns: 1fr ;
-    grid-gap: 20px;
-    margin-bottom: 30px;
+ul.dictionary-list li button#excluir{
+    background: rgb(207, 44, 44) ;
 }
 
-ul.alternatives li {
-    display: flex;
-    flex-direction: row;
-}
+ul.dictionary-list li button#editar{
+    background: rgb(190, 165, 49);
 
-ul.alternatives li header {
-    width: 40px;
-    height: 40px;
-    background-size: cover;
-    border-radius: 4px; 
-    margin-left: 10px;
 }
-
-ul.alternatives li strong {
-    margin-top: 10px;
-    font-size: 10px;
-    color: #444;
-}
-
-ul.alternatives li p {
-    font-size: 20px;
-    color: #999;
-}
-span.resposta {
-    margin-left: 4px;
-    font-weight: bold;
-    font-size: large;
-    color: rgba(0, 0, 0, 0.801) !important;
+h1{
+    margin: auto;
+    width: 200px;
 }

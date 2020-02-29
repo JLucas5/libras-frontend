@@ -17,11 +17,11 @@ export default function NewObjective( { history } ){
     const [ loadingState, setLoadingState] = useState(false)
     
     const [ thumbnail, setThumbnail] = useState(null)
-    const [ text, setText ] = useState('')
+    const [ text ] = useState('')
     const [ correct_answer , setCorrect_answer] = useState(false)
     const [ statement , setStatement] = useState('')
     const [ statement_link , setStatement_link] = useState('')
-    const [ activity, setActivity] = useState(null)
+    const [ activity ] = useState(null)
 
     const { id } = useParams()
 
@@ -103,7 +103,7 @@ export default function NewObjective( { history } ){
                     </Col>
                 </Row>
             </Form>
-
+            
             <form onSubmit={handleSubmit}>
                 <Form.Group controlId="formBasicCheckbox">
                     <Form.Check

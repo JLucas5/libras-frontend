@@ -101,3 +101,7 @@ Nav{
     border-bottom-width: 2px;
     color: #000 !important;
 }
+
+div.dropdown-menu{
+  background-color: rgba(255, 255, 255, 0.55);
+} 

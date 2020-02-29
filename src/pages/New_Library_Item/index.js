@@ -1,25 +1,19 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState } from 'react'
 
 import api from '../../services/api'
 
-import camera from '../../assets/camera.svg'
 import './styles.css'
+import { useParams } from 'react-router-dom'
 
 
 export default function NewLibraryItem( { history } ){
 
     const [ loadingState, setLoadingState] = useState(false)
     
-    const [ thumbnail, setThumbnail] = useState(null)
-    const [ location, setLocation] = useState('')
+    const [ file, setFile] = useState(null)
+    const [ link, setLink] = useState('')
     const [ name, setName ] = useState('')
-
-    const preview = useMemo(
-        () => {
-            return thumbnail ? URL.createObjectURL(thumbnail) : null
-        },
-        [thumbnail]
-    )
+    const { type } = useParams()
 
     async function handleSubmit(event){
 
@@ -29,40 +23,37 @@ export default function NewLibraryItem( { history } ){
 
         let data = new FormData()
 
-        data.set("thumbnail", thumbnail)
-        data.set("word", name)
+        file ? data.set("file", file) : data.set("file_location", link)
+        data.set("name", name)
+        data.set("type", type)
         
         await api.post('/library/new', data)
 
-        history.push('/library')
+        history.push('/library/' + type)
     }
 
     return (
         <form onSubmit={handleSubmit}>
-            <label 
-            id="thumbnail" 
-            style={{backgroundImage: `url(${preview})`}}
-            className= {thumbnail ? 'has-thumbnail' : ''}
-            >
-
-            <input type="file" onChange={event => setThumbnail(event.target.files[0])} />       
-            <img src={camera} alt="Select img"/>
-
-            </label>
             
-            <label htmlFor="statement">Palavra *</label>
-            <input id='word'
+            <label htmlFor="statement" >Nome *</label>
+            <input id='name'
             placeholder='Nome do conteúdo'
             value={name}
             onChange = {event => setName(event.target.value)}
             />
 
-            <label htmlFor="location">Link do conteúdo *</label>
-            <input id='location'
-            placeholder='Link caso esteja no Youtube. Sobreescreve o upload acima.'
-            value={location}
-            onChange = {event => setLocation(event.target.value)}
+            <label htmlFor="link" hidden={ type === 'book' } >Link do conteúdo *</label>
+            <input id='link'
+            placeholder='Link do Youtube'
+            value={link}
+            onChange = {event => setLink(event.target.value)}
+            hidden={ type === 'book' }
             />
+
+            <label htmlFor="file" hidden={ type !== 'book' } > Arquivo PDF</label>
+            <input type="file"  onChange={event => setFile(event.target.files[0])} hidden={ type !== 'book' }/>
+
+
             <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
                 { loadingState ? "Cadastrando . . ."  : "Cadastrar" }
             </button>

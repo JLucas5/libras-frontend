@@ -18,9 +18,16 @@ export default function ViewModule( { history }){
 
     async function deleteModule(id){
 
-        const response = await api.delete('modules/delete/' + id)
+        await api.delete('modules/delete/' + id)
         
         history.push('/module')
+    }
+
+    async function deleteActivity(id){
+
+        await api.delete('activities/delete/' + id)
+
+        window.location.reload()
     }
     
     useEffect(()=> {
@@ -63,9 +70,9 @@ export default function ViewModule( { history }){
                             <tr key={activity._id}>
                                 <td> 
                                     <Row > 
-                                        <Col md={9}> {activity.statement}</Col>
-                                        <Col md={1}><button className='editaratv'>  Editar  </button></Col>
-                                        <Col md={1}><button className='excluiratv'>  Excluir  </button></Col>
+                                        <Col md={7}> {activity.statement}</Col>
+                                        <Col md={2}><Link to={"/activity/edit/" + activity._id}><button className='editaratv'>  Editar  </button></Link></Col>
+                                        <Col md={2}><button className='excluiratv' onClick={event => deleteActivity(activity._id)}>  Excluir  </button></Col>
                                         <Col md={1}></Col>
                                     </Row>
                                 </td>

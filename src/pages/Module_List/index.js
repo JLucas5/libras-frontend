@@ -28,6 +28,7 @@ export default function ModuleList({ history }){
     }
     return (
         <>
+            <h1>Módulos</h1>
             <Link to="/module/new"><button className='btn'>Cadastrar novo módulo</button></Link>
 
             <ul className= 'module-list'>

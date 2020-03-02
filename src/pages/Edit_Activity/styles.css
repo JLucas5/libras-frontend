@@ -1,0 +1,52 @@
+label.thumbnail {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: 1px dashed #ddd;
+    background-size: cover;
+    cursor: pointer;
+    width: 160px;
+    height: 160px;
+    max-height: 200px;
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+label.alternative-thumbnail {
+    margin-top: 20px;
+    margin-bottom: 20px;
+    border: none;
+    background-size: cover;
+    width: 65px;
+    height: 65px;
+    max-height: 200px;
+    max-width: 200px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+label.thumbnail input {
+    display: none;
+}
+
+button.btn{
+  flex-direction: row !important;
+  width: auto;
+  margin-right:4px ;
+  margin-top: 0px !important;
+  margin-bottom: 0px !important;
+}
+
+button#excluir{
+    background: rgb(207, 44, 44) ;  
+    align-self: center;
+    border: 0;
+    border-radius: 4px;
+    padding: 2px;
+    font-size: 16px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+    
+}

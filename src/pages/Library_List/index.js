@@ -19,7 +19,7 @@ export default function LibraryList(){
     useEffect(( )=> {
         async function loadActivities(){
 
-            const response = await api.post('/library/view/' + type)
+            const response = await api.get('/library/view/' + type)
 
             setLibrary(response.data)           
         }

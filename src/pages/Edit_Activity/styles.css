@@ -50,3 +50,12 @@ button#excluir{
     cursor: pointer;
     
 }
+
+#correct_answer{
+    border-style: solid;
+    border-color: forestgreen ;
+    border-radius: 9px;
+}
+.alternative{
+    margin-bottom:15px ;
+}

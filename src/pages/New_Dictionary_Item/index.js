@@ -12,6 +12,7 @@ export default function NewDictionaryItem( { history } ){
     
     const [ thumbnail, setThumbnail] = useState(null)
     const [ word, setWord ] = useState('')
+    const [ video, setVideo ] = useState('')
 
     const preview = useMemo(
         () => {
@@ -30,6 +31,7 @@ export default function NewDictionaryItem( { history } ){
 
         data.set("thumbnail", thumbnail)
         data.set("word", word)
+        data.set("video", video)
         
         await api.post('/dictionary/new', data)
 
@@ -45,9 +47,14 @@ export default function NewDictionaryItem( { history } ){
             >
                 <input type="file" onChange={event => setThumbnail(event.target.files[0])} />       
                 <img src={camera} alt="Select img"/>
-
             </label>
             
+            <label htmlFor="statement">Vídeo</label>
+            <input id='video'
+            placeholder='Link do youtube da palavra em LIBRAS'
+            value={video}
+            onChange = {event => setVideo(event.target.value)}
+            />
 
             <label htmlFor="statement">Palavra *</label>
             <input id='word'

@@ -32,31 +32,36 @@ export default function NewLibraryItem( { history } ){
         history.push('/library/' + type)
     }
 
-    return (
-        <form onSubmit={handleSubmit}>
-            
-            <label htmlFor="statement" >Nome *</label>
-            <input id='name'
-            placeholder='Nome do conteúdo'
-            value={name}
-            onChange = {event => setName(event.target.value)}
-            />
+    return (<>
+                <h1 hidden={ type !== 'video' }>Biblioteca - Cadastrar Vídeo</h1>
+                <h1 hidden={ type !== 'book' }>Biblioteca - Cadastrar Livro</h1>
+                <h1 hidden={ type !== 'music' }>Biblioteca - Cadastrar Música</h1>
+                <form onSubmit={handleSubmit}>
+                    
+                    <label htmlFor="statement" >Nome *</label>
+                    <input id='name'
+                    placeholder='Nome do conteúdo'
+                    value={name}
+                    onChange = {event => setName(event.target.value)}
+                    required
+                    />
 
-            <label htmlFor="link" hidden={ type === 'book' } >Link do conteúdo *</label>
-            <input id='link'
-            placeholder='Link do Youtube'
-            value={link}
-            onChange = {event => setLink(event.target.value)}
-            hidden={ type === 'book' }
-            />
+                    <label htmlFor="link" hidden={ type === 'book' } >Link do conteúdo *</label>
+                    <input id='link'
+                    placeholder='Link do Youtube'
+                    value={link}
+                    onChange = {event => setLink(event.target.value)}
+                    hidden={ type === 'book' }
+                    />
 
-            <label htmlFor="file" hidden={ type !== 'book' } > Arquivo PDF</label>
-            <input type="file"  onChange={event => setFile(event.target.files[0])} hidden={ type !== 'book' }/>
+                    <label htmlFor="file" hidden={ type !== 'book' } > Arquivo PDF</label>
+                    <input type="file"  onChange={event => setFile(event.target.files[0])} hidden={ type !== 'book' }/>
 
 
-            <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
-                { loadingState ? "Cadastrando . . ."  : "Cadastrar" }
-            </button>
-        </form>
+                    <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
+                        { loadingState ? "Cadastrando . . ."  : "Cadastrar" }
+                    </button>
+                </form>
+            </>
     )
 }

@@ -59,8 +59,6 @@ export default function EditModule( { history } ){
         data.set("pdf", file)
         data.set("video", link)
         data.set("old_pdf", old_file)
-        
-        console.log(name, description, image, old_file, old_image, file, link)
 
         await api.post('/modules/edit/' + id, data)
 

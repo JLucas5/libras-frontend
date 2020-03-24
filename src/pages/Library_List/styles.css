@@ -1,3 +1,6 @@
+h1{
+    width: max-content !important;
+}
 ul.library-list {
     width: 100%;
     list-style: none;

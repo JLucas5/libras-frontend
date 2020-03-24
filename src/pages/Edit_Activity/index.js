@@ -23,6 +23,7 @@ export default function EditActivity( { history } ){
 
     const [ thumbnail, setThumbnail ] = useState(null)
     const [ video, setVideo ] = useState("")
+    const [ pdf, setPdf] = useState(null)
     const [ expected_answer, setExpected_answer ] = useState("")
     const [ statement , setStatement ] = useState('')
     const [ alternatives, setAlternatives ] = useState([])
@@ -76,6 +77,7 @@ export default function EditActivity( { history } ){
         data.set("statement", statement)
         data.set("thumbnail", thumbnail)
         data.set("video", video)
+        data.set("pdf", pdf)
         data.set("expected_answer", expected_answer)
 
         await api.post('/activities/update/' + activity_id, data)
@@ -134,6 +136,11 @@ export default function EditActivity( { history } ){
                                     value = {video}
                                     onChange = {event => setVideo(event.target.value)}
                                 />
+
+                                <label htmlFor="file" >Arquivo PDF</label>
+                                <a id='btn'className="btn" href={activity.pdf} target='_blank'rel="noopener noreferrer" hidden={ !activity.pdf } >Ver arquivo antigo</a>
+                                <input type="file"  onChange={event => setPdf(event.target.files[0])}/>
+                               
                                 <Form.Label
                                 className="thumbnail"
                                 style={{backgroundImage: preview ? `url(${preview})` : `url(${activity.statement_image})` }}
@@ -141,7 +148,7 @@ export default function EditActivity( { history } ){
                                 <input type="file" onChange={event => setThumbnail(event.target.files[0])} />
                                 <img src={camera} alt="Select img"/>
                                 </Form.Label>
-
+                            
                                 <Form.Label hidden={activity.type === "obj"}>Resposta Esperada</Form.Label>
                                 <Form.Control
                                     hidden={activity.type === "obj"}
@@ -161,10 +168,10 @@ export default function EditActivity( { history } ){
                         <Row>
                             <Col>
                             {alternatives ? alternatives.map(alternative => (
-                                <Row key={alternative._id}>
+                                <Row key={alternative._id} id={alternative.correct_answer ? "correct_answer" : ""} className="alternative">
                                     <Col md={9}>
                                         <strong>{alternative.text}</strong>
-                                        <label disabled={alternative.location ? true : false}
+                                        <label hidden={alternative.location ? false : true}
                                             className="alternative-thumbnail"
                                             style={{backgroundImage: `url(${alternative.location})`}}
                                         >
@@ -185,6 +192,7 @@ export default function EditActivity( { history } ){
                     </Col>
                 </Row>
 
+
             <Modal show={show} onHide={handleClose}>
                 <Modal.Header>
                     <Modal.Title>Nova Alternativa</Modal.Title>
@@ -204,6 +212,7 @@ export default function EditActivity( { history } ){
                             <input type="file" onChange={event => setAlternative_thumbnail(event.target.files[0])} />
                             <img src={camera} alt="Select img"/>
                         </Form.Label>
+
                         <Form.Check
                         label="Alternativa correta?"
                         onChange={event => { setCorrect_answer(!correct_answer) }}
@@ -220,8 +229,6 @@ export default function EditActivity( { history } ){
                         </Button>
                     </Modal.Footer>
             </Modal>                    
-
-            
         </>
     )
 }

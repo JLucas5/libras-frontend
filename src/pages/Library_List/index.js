@@ -21,6 +21,10 @@ export default function LibraryList(){
 
             const response = await api.get('/library/view/' + type)
 
+            response.data.sort((a,b) => {
+                return a.name.toLowerCase() > b.name.toLowerCase();
+            });
+            
             setLibrary(response.data)           
         }
 
@@ -30,7 +34,9 @@ export default function LibraryList(){
     
     return (
         <>
-            <h1>Biblioteca</h1>
+            <h1 hidden={ type !== 'video' }>Biblioteca - Vídeos</h1>
+            <h1 hidden={ type !== 'book' }>Biblioteca - Livros</h1>
+            <h1 hidden={ type !== 'music' }>Biblioteca - Músicas</h1>
             <Link to={"/library/new/" + type}><button className='btn'>Cadastrar novo item</button></Link>
             <ul className= 'library-list' id="library">
                 {library.map(library_item => (

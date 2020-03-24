@@ -17,6 +17,8 @@ export default function EditDictionaryItem( { history } ){
 
     const [ thumbnail, setThumbnail ] = useState(null)
     const [ word, setWord ] = useState('')
+    
+    const [ video, setVideo ] = useState('')
 
     useEffect(()=> {
         async function loadActivities(){
@@ -25,6 +27,7 @@ export default function EditDictionaryItem( { history } ){
 
             setPrevious_image(response.data.location)     
             setWord(response.data.word)      
+            setVideo(response.data.video)
         }
 
         loadActivities()
@@ -47,6 +50,8 @@ export default function EditDictionaryItem( { history } ){
 
         data.set("thumbnail", thumbnail)
         data.set("word", word)
+        data.set("video", video)
+        
         data.set("old_image", previous_image)
         
         await api.post('/dictionary/edit/' + id, data)
@@ -56,14 +61,6 @@ export default function EditDictionaryItem( { history } ){
 
     return (
         <form onSubmit={handleSubmit}>
-
-            <label htmlFor="statement">Palavra *</label>
-            <input id='word'
-            placeholder='A palavra em português'
-            value={word}
-            onChange = {event => setWord(event.target.value)}
-            />
-
             <label 
             id="thumbnail" 
             style={{backgroundImage: thumbnail ? `url(${preview})` : `url(${previous_image})`}}
@@ -73,6 +70,21 @@ export default function EditDictionaryItem( { history } ){
                 <img src={camera} alt="Select img"/>
 
             </label>
+
+
+            <label htmlFor="statement">Vídeo</label>
+            <input id='video'
+            placeholder='Link do youtube da palavra em LIBRAS'
+            value={video}
+            onChange = {event => setVideo(event.target.value)}
+            />
+
+            <label htmlFor="statement">Palavra *</label>
+            <input id='word'
+            placeholder='A palavra em português'
+            value={word}
+            onChange = {event => setWord(event.target.value)}
+            />
             <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
                 { loadingState ? "Atualizando . . ."  : "Atualizar" }
             </button>

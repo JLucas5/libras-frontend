@@ -17,7 +17,12 @@ export default function DictionaryList(){
     
     useEffect(()=> {
         async function loadActivities(){
+
             const response = await api.get('/dictionary')
+
+            response.data.sort((a,b) => {
+                return a.word.toLowerCase() > b.word.toLowerCase();
+            });
 
             setDictionary(response.data)           
         }

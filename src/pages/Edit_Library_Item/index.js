@@ -68,11 +68,17 @@ export default function EditLibraryItem( { history } ){
                 value={link}
                 onChange = {event => setLink(event.target.value)}
                 hidden={ type === 'book' }
+                disabled={ type === 'book' }
+                required
                 />
 
                 <label htmlFor="file" hidden={ type !== 'book' } >Arquivo PDF</label>
                 <a id='btn'className="btn" href={link} target='_blank'rel="noopener noreferrer" hidden={ type !== 'book' } > Ver arquivo atual</a>
-                <input type="file"  onChange={event => setFile(event.target.files[0])} hidden={ type !== 'book' } />
+                <input type="file"  
+                onChange={event => setFile(event.target.files[0])} 
+                hidden={ type !== 'book' } 
+                disabled={ type !== 'book' }
+                required/>
 
 
                 <button type ='submit' className="btn" disabled= { loadingState ? true : false } >

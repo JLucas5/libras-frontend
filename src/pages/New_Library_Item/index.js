@@ -52,13 +52,19 @@ export default function NewLibraryItem( { history } ){
                     value={link}
                     onChange = {event => setLink(event.target.value)}
                     hidden={ type === 'book' }
+                    disabled={ type === 'book' }
+                    required
                     />
 
                     <label htmlFor="file" hidden={ type !== 'book' } > Arquivo PDF</label>
-                    <input type="file"  onChange={event => setFile(event.target.files[0])} hidden={ type !== 'book' }/>
+                    <input type="file"  
+                    onChange={event => setFile(event.target.files[0])} 
+                    hidden={ type !== 'book' } 
+                    disabled={ type !== 'book' } 
+                    required/>
 
 
-                    <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
+                    <button type ='submit' className="btn" disabled= { loadingState ? true : false }>
                         { loadingState ? "Cadastrando . . ."  : "Cadastrar" }
                     </button>
                 </form>

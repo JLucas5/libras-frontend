@@ -26,8 +26,13 @@ label#thumbnail.has-thumbnail {
    border: none;
 }
 
-label#thumbnail.has-thumbnail img {
-    display: none;
+.remove-button{
+    width: 10vw;
+    align-self: flex-start;
+    margin-bottom: 10px;
+    border-radius: 4px;
+    background-color:rgb(207, 44, 44);
+    line-height: 19px;
 }
 
 a#btn{

@@ -11,10 +11,6 @@ export default function ModuleList({ history }){
     useEffect(()=> {
         async function loadModules(){
             const response = await api.get('/modules')
-            
-            response.data.sort((a,b) => {
-                return a.name.toLowerCase() > b.name.toLowerCase();
-            });
 
             setModules(response.data)           
         }
@@ -24,7 +20,7 @@ export default function ModuleList({ history }){
   
     function openModule(id){
 
-        history.push("/module/view/" + id);
+        history.push("/module/view/" + id)
     }
     return (
         <>

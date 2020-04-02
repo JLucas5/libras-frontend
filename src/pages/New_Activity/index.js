@@ -37,12 +37,12 @@ export default function ActivityList({ history  }){
             <Row>
                 <Col md={6}>
                     <button onClick={() => {toObjective()}} >
-                        Questão Objetiva
+                        Atividade Objetiva
                     </button>
                 </Col>
                 <Col md={6}>
                     <button onClick={() => {toSubjective()}} >
-                        Questão Discursiva
+                        Atividade Discursiva
                     </button>
                 </Col>
             </Row>

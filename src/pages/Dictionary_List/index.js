@@ -20,9 +20,6 @@ export default function DictionaryList(){
 
             const response = await api.get('/dictionary')
 
-            response.data.sort((a,b) => {
-                return a.word.toLowerCase() > b.word.toLowerCase();
-            });
 
             setDictionary(response.data)           
         }

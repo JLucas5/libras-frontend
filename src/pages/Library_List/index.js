@@ -20,10 +20,6 @@ export default function LibraryList(){
         async function loadActivities(){
 
             const response = await api.get('/library/view/' + type)
-
-            response.data.sort((a,b) => {
-                return a.name.toLowerCase() > b.name.toLowerCase();
-            });
             
             setLibrary(response.data)           
         }

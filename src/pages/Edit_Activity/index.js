@@ -29,12 +29,18 @@ export default function EditActivity({ history }) {
 
 	const [correct_answer, setCorrect_answer] = useState(false)
 	const [alternative_text, setAlternative_text] = useState('')
+	const [alternative_video, setAlternative_video] = useState('')
 	const [alternative_thumbnail, setAlternative_thumbnail] = useState(null)
 
 	const [alternative_edit, setAlternative_edit] = useState('')
+	const [alternative_video_edit, setAlternative_video_edit] = useState('')
 	const [correct_answer_edit, setCorrect_answer_edit] = useState(false)
 	const [alternative_text_edit, setAlternative_text_edit] = useState('')
-	const [alternative_thumbnail_edit, setAlternative_thumbnail_edit] = useState(null)
+
+	const [
+		alternative_thumbnail_edit,
+		setAlternative_thumbnail_edit,
+	] = useState(null)
 
 	const { id: activity_id } = useParams()
 
@@ -43,7 +49,9 @@ export default function EditActivity({ history }) {
 	}, [thumbnail])
 
 	const alternative_preview = useMemo(() => {
-		return alternative_thumbnail ? URL.createObjectURL(alternative_thumbnail) : null
+		return alternative_thumbnail
+			? URL.createObjectURL(alternative_thumbnail)
+			: null
 	}, [alternative_thumbnail])
 
 	useEffect(() => {
@@ -91,6 +99,7 @@ export default function EditActivity({ history }) {
 		data.set('correct_answer', correct_answer)
 		data.set('thumbnail', alternative_thumbnail)
 		data.set('text', alternative_text)
+		data.set('video', alternative_video)
 
 		await api.post('/alternative/add/' + activity_id, data)
 
@@ -109,9 +118,11 @@ export default function EditActivity({ history }) {
 		data.set('correct_answer', correct_answer_edit)
 		data.set('thumbnail', alternative_thumbnail_edit)
 		data.set('text', alternative_text_edit)
+		data.set('video', alternative_video_edit)
 
 		await api.post('/alternative/edit/' + alternative_id, data)
 
+		console.log('oiii')
 		window.location.reload()
 	}
 
@@ -120,6 +131,7 @@ export default function EditActivity({ history }) {
 		setAlternative_thumbnail_edit(alternative.thumbnail)
 		setCorrect_answer_edit(alternative.correct_answer)
 		setAlternative_edit(alternative._id)
+		setAlternative_video_edit(alternative.video)
 
 		handleShowEdit()
 	}
@@ -140,31 +152,76 @@ export default function EditActivity({ history }) {
 					<Row>
 						<Col>
 							<Form.Label>Enunciado em Português: *</Form.Label>
-							<Form.Control id='statement' placeholder='Qual, por que, como . . .' value={statement} onChange={(event) => setStatement(event.target.value)} />
+							<Form.Control
+								id='statement'
+								placeholder='Qual, por que, como . . .'
+								value={statement}
+								onChange={(event) =>
+									setStatement(event.target.value)
+								}
+							/>
 
 							<Form.Label>Enunciado em LIBRAS (vídeo)</Form.Label>
-							<Form.Control id='stetement_link' placeholder='Link para o Youtube aqui' value={video} onChange={(event) => setVideo(event.target.value)} />
+							<Form.Control
+								id='stetement_link'
+								placeholder='Link para o Youtube aqui'
+								value={video}
+								onChange={(event) =>
+									setVideo(event.target.value)
+								}
+							/>
 
 							<label htmlFor='file'>Arquivo PDF</label>
-							<a id='btn' className='btn' href={activity.pdf} target='_blank' rel='noopener noreferrer' hidden={!activity.pdf}>
+							<a
+								id='btn'
+								className='btn'
+								href={activity.pdf}
+								target='_blank'
+								rel='noopener noreferrer'
+								hidden={!activity.pdf}>
 								Ver arquivo antigo
 							</a>
-							<input type='file' onChange={(event) => setPdf(event.target.files[0])} />
+							<input
+								type='file'
+								onChange={(event) =>
+									setPdf(event.target.files[0])
+								}
+							/>
 
 							<Form.Label
 								className='thumbnail'
 								style={{
-									backgroundImage: preview ? `url(${preview})` : `url(${activity.statement_image})`,
+									backgroundImage: preview
+										? `url(${preview})`
+										: `url(${activity.statement_image})`,
 								}}>
-								<input type='file' onChange={(event) => setThumbnail(event.target.files[0])} />
+								<input
+									type='file'
+									onChange={(event) =>
+										setThumbnail(event.target.files[0])
+									}
+								/>
 								<img src={camera} alt='Select img' />
 							</Form.Label>
 
-							<Form.Label hidden={activity.type === 'obj'}>Resposta Esperada</Form.Label>
-							<Form.Control hidden={activity.type === 'obj'} id='expected_answer' placeholder='Resposta correta esperada aqui' value={expected_answer} onChange={(event) => setExpected_answer(event.target.value)} />
+							<Form.Label hidden={activity.type === 'obj'}>
+								Resposta Esperada
+							</Form.Label>
+							<Form.Control
+								hidden={activity.type === 'obj'}
+								id='expected_answer'
+								placeholder='Resposta correta esperada aqui'
+								value={expected_answer}
+								onChange={(event) =>
+									setExpected_answer(event.target.value)
+								}
+							/>
 						</Col>
 					</Row>
-					<button className='btn' onClick={(event) => handleSubmit(event)} disabled={loadingState ? true : false}>
+					<button
+						className='btn'
+						onClick={(event) => handleSubmit(event)}
+						disabled={loadingState ? true : false}>
 						{loadingState ? 'Salvando . . .' : 'Salvar'}
 					</button>
 				</Col>
@@ -176,23 +233,44 @@ export default function EditActivity({ history }) {
 						<Col>
 							{alternatives ? (
 								alternatives.map((alternative) => (
-									<Row key={alternative._id} id={alternative.correct_answer ? 'correct_answer' : ''} className='alternative'>
+									<Row
+										key={alternative._id}
+										id={
+											alternative.correct_answer
+												? 'correct_answer'
+												: ''
+										}
+										className='alternative'>
 										<Col md={6}>
 											<strong>{alternative.text}</strong>
 											<label
-												hidden={alternative.location ? false : true}
+												hidden={
+													alternative.location
+														? false
+														: true
+												}
 												className='alternative-thumbnail'
 												style={{
 													backgroundImage: `url(${alternative.location})`,
 												}}></label>
 										</Col>
 										<Col md={3}>
-											<button id='editar' onClick={(event) => editAlternative(alternative)}>
+											<button
+												id='editar'
+												onClick={(event) =>
+													editAlternative(alternative)
+												}>
 												Editar
 											</button>
 										</Col>
 										<Col md={3}>
-											<button id='excluir' onClick={(event) => deleteAlternative(alternative._id)}>
+											<button
+												id='excluir'
+												onClick={(event) =>
+													deleteAlternative(
+														alternative._id
+													)
+												}>
 												Deletar
 											</button>
 										</Col>
@@ -205,7 +283,9 @@ export default function EditActivity({ history }) {
 					</Row>
 					<Row>
 						<Col>
-							<button onClick={handleShowNew}>Adicionar alternativa</button>
+							<button onClick={handleShowNew}>
+								Adicionar alternativa
+							</button>
 						</Col>
 					</Row>
 				</Col>
@@ -217,13 +297,34 @@ export default function EditActivity({ history }) {
 				</Modal.Header>
 				<Modal.Body>
 					<Form.Label>Texto da Alternativa</Form.Label>
-					<Form.Control id='statement' placeholder='Texto aqui' value={alternative_text} onChange={(event) => setAlternative_text(event.target.value)} />
+					<Form.Control
+						id='statement'
+						placeholder='Texto aqui'
+						value={alternative_text}
+						onChange={(event) =>
+							setAlternative_text(event.target.value)
+						}
+					/>
+					<Form.Label>Video da Alternativa</Form.Label>
+					<Form.Control
+						id='video'
+						placeholder='Link aqui'
+						value={alternative_video}
+						onChange={(event) =>
+							setAlternative_video(event.target.value)
+						}
+					/>
 					<Form.Label
 						className='thumbnail'
 						style={{
 							backgroundImage: `url(${alternative_preview})`,
 						}}>
-						<input type='file' onChange={(event) => setAlternative_thumbnail(event.target.files[0])} />
+						<input
+							type='file'
+							onChange={(event) =>
+								setAlternative_thumbnail(event.target.files[0])
+							}
+						/>
 						<img src={camera} alt='Select img' />
 					</Form.Label>
 
@@ -239,7 +340,10 @@ export default function EditActivity({ history }) {
 					<Button variant='secondary' onClick={handleCloseNew}>
 						Fechar
 					</Button>
-					<Button variant='primary' onClick={handleSave} disabled={loadingState ? true : false}>
+					<Button
+						variant='primary'
+						onClick={handleSave}
+						disabled={loadingState ? true : false}>
 						{loadingState ? 'Salvando . . .' : 'Salvar'}
 					</Button>
 				</Modal.Footer>
@@ -251,9 +355,35 @@ export default function EditActivity({ history }) {
 				</Modal.Header>
 				<Modal.Body>
 					<Form.Label>Texto da Alternativa</Form.Label>
-					<Form.Control id='statement' placeholder='Texto aqui' value={alternative_text_edit} onChange={(event) => setAlternative_text_edit(event.target.value)} />
-					<Form.Label className='thumbnail' style={{ backgroundImage: alternative_text_edit }}>
-						<input type='file' onChange={(event) => setAlternative_thumbnail_edit(event.target.files[0])} />
+					<Form.Control
+						id='statement'
+						placeholder='Texto aqui'
+						value={alternative_text_edit}
+						onChange={(event) =>
+							setAlternative_text_edit(event.target.value)
+						}
+					/>
+					<Form.Label>Vídeo da Alternativa</Form.Label>
+					<Form.Control
+						id='video'
+						placeholder='Link aqui'
+						value={alternative_video_edit}
+						onChange={(event) =>
+							setAlternative_video_edit(event.target.value)
+						}
+					/>
+
+					<Form.Label
+						className='thumbnail'
+						style={{ backgroundImage: alternative_text_edit }}>
+						<input
+							type='file'
+							onChange={(event) =>
+								setAlternative_thumbnail_edit(
+									event.target.files[0]
+								)
+							}
+						/>
 						<img src={camera} alt='Select img' />
 					</Form.Label>
 
@@ -265,11 +395,17 @@ export default function EditActivity({ history }) {
 						id='checkbox'
 					/>
 				</Modal.Body>
+
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleCloseEdit}>
 						Fechar
 					</Button>
-					<Button variant='primary' onClick={handleEdit(alternative_edit)} disabled={loadingState ? true : false}>
+					<Button
+						variant='primary'
+						onClick={(event) => {
+							handleEdit(alternative_edit)
+						}}
+						disabled={loadingState ? true : false}>
 						{loadingState ? 'Salvando . . .' : 'Salvar'}
 					</Button>
 				</Modal.Footer>

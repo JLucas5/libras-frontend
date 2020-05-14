@@ -1,10 +1,10 @@
 import React, { useCallback, useContext } from 'react';
-import { withRouter } from 'react-router';
+import { withRouter, Redirect } from 'react-router';
 import app from '../../services/base';
 import { AuthContext } from '../../services/auth';
 import './styles.css';
 
-export const Login = ({ history }) => {
+const Login = ({ history }) => {
   const handleLogin = useCallback(
     async event => {
       event.preventDefault();
@@ -27,7 +27,7 @@ export const Login = ({ history }) => {
     const { currentUser } = useContext(AuthContext);
 
     if(currentUser) {
-      return history.push("/panel");
+      return <Redirect to={"/panel"} />
     }
 
   return (

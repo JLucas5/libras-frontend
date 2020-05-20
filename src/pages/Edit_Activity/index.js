@@ -241,7 +241,24 @@ export default function EditActivity({ history }) {
 												: ''
 										}
 										className='alternative'>
-										<Col md={6}>
+										<Col md={1}>
+											<input
+												onClick={(event) =>
+													setExpected_answer(
+														event.target.value
+													)
+												}
+												type='radio'
+												name='correctAlternative'
+												value={alternative._id}
+												id=''
+												checked={
+													alternative._id ===
+													expected_answer
+												}
+											/>
+										</Col>
+										<Col md={5}>
 											<strong>{alternative.text}</strong>
 											<label
 												hidden={
@@ -291,6 +308,7 @@ export default function EditActivity({ history }) {
 				</Col>
 			</Row>
 
+			{/* New alternative modal */}
 			<Modal show={newAltModal} onHide={handleCloseNew}>
 				<Modal.Header>
 					<Modal.Title>Nova Alternativa</Modal.Title>
@@ -349,6 +367,7 @@ export default function EditActivity({ history }) {
 				</Modal.Footer>
 			</Modal>
 
+			{/* Edit alternative modal */}
 			<Modal show={editAltModal} onHide={handleCloseEdit}>
 				<Modal.Header>
 					<Modal.Title>Editar Alternativa</Modal.Title>
@@ -386,14 +405,6 @@ export default function EditActivity({ history }) {
 						/>
 						<img src={camera} alt='Select img' />
 					</Form.Label>
-
-					<Form.Check
-						label='Alternativa correta?'
-						onChange={(event) => {
-							setCorrect_answer_edit(!correct_answer)
-						}}
-						id='checkbox'
-					/>
 				</Modal.Body>
 
 				<Modal.Footer>

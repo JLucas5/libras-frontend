@@ -9,6 +9,8 @@ export default function DictionaryList(){
 
     async function deleteItem(id){
 
+        alert("Cuidado!");
+
         await api.delete('/dictionary/delete/' + id)
 
         window.location.reload()

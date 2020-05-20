@@ -1,6 +1,5 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
-import app from "../../services/base";
 import '../../App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -36,35 +35,35 @@ export default function Panel(){
                 <NavDropdown.Item href="/panel/library/music">Músicas</NavDropdown.Item>
                 <NavDropdown.Item href="/panel/library/book">Livros</NavDropdown.Item>
                 </NavDropdown>
-                <button onClick={() => app.auth().signOut()}> Sair </button>
+                <Nav.Link href="/">Sair</Nav.Link>
             </Navbar.Collapse>
-        </Navbar>
+            </Navbar>
 
-        <div className="container">
+            <div className="container">
             <h1>Bem-vindo ao Painel Administrativo!</h1> 
-        <div className="content">
-            <Switch>
-                <Route path='/panel/activities/new/:id' exact component={NewActivity} />
-                <Route path='/panel/activity/edit/:id'component={EditActivity} />
-            
+                <div className="content">
+                    <Switch>
+                        <Route path='/panel/activities/new/:id' exact component={NewActivity} />
+                        <Route path='/panel/activity/edit/:id'component={EditActivity} />
+                    
 
-                <Route path='/panel/dictionary'exact component={DictionaryList} />
-                <Route path='/panel/dictionary/edit/:id'exact component={EditDictionaryItem} />
-                <Route path='/panel/dictionary/new'exact component={NewDictionaryItem} />
+                        <Route path='/panel/dictionary'exact component={DictionaryList} />
+                        <Route path='/panel/dictionary/edit/:id'exact component={EditDictionaryItem} />
+                        <Route path='/panel/dictionary/new'exact component={NewDictionaryItem} />
 
 
-                <Route path='/panel/module'exact component={ModuleList} />
-                <Route path='/panel/module/new'component={NewModule} />
-                <Route path='/panel/module/edit/:id'exact component={EditModule} />
-                <Route path='/panel/module/view/:id'exact component={ViewModule} />
+                        <Route path='/panel/module'exact component={ModuleList} />
+                        <Route path='/panel/module/new'component={NewModule} />
+                        <Route path='/panel/module/edit/:id'exact component={EditModule} />
+                        <Route path='/panel/module/view/:id'exact component={ViewModule} />
 
-                
-                <Route path='/panel/library/new/:type'component={NewLibraryItem} />
-                <Route path='/panel/library/edit/:id'component={EditLibraryItem} />
-                <Route path='/panel/library/:type'exact component={LibraryList} />
-            </Switch>
+                        
+                        <Route path='/panel/library/new/:type'component={NewLibraryItem} />
+                        <Route path='/panel/library/edit/:id'component={EditLibraryItem} />
+                        <Route path='/panel/library/:type'exact component={LibraryList} />
+                    </Switch>
+                </div>
+            </div>
         </div>
-      </div>
-    </div>
     );
 }

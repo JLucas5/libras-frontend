@@ -6,88 +6,98 @@ import api from '../../services/api'
 import camera from '../../assets/camera.svg'
 import './styles.css'
 
+export default function EditDictionaryItem({ history }) {
+	const { id } = useParams()
 
-export default function EditDictionaryItem( { history } ){
+	const [loadingState, setLoadingState] = useState(false)
 
-    const { id } = useParams()
+	const [previous_image, setPrevious_image] = useState('')
 
-    const [ loadingState, setLoadingState ] = useState(false)
-    
-    const [ previous_image , setPrevious_image] = useState('')
+	const [thumbnail, setThumbnail] = useState(null)
+	const [word, setWord] = useState('')
+	const [meaning, setMeaning] = useState('')
+	const [video, setVideo] = useState('')
 
-    const [ thumbnail, setThumbnail ] = useState(null)
-    const [ word, setWord ] = useState('')
-    
-    const [ video, setVideo ] = useState('')
+	useEffect(() => {
+		async function loadActivities() {
+			const response = await api.get('/dictionary/' + id)
 
-    useEffect(()=> {
-        async function loadActivities(){
+			setPrevious_image(response.data.location)
+			setWord(response.data.word)
+			setVideo(response.data.video)
+		}
 
-            const response = await api.get('/dictionary/' + id)
+		loadActivities()
+	}, [id])
 
-            setPrevious_image(response.data.location)     
-            setWord(response.data.word)      
-            setVideo(response.data.video)
-        }
+	const preview = useMemo(() => {
+		return thumbnail ? URL.createObjectURL(thumbnail) : null
+	}, [thumbnail])
 
-        loadActivities()
-    }, [id] )
+	async function handleSubmit(event) {
+		setLoadingState(true)
 
-    const preview = useMemo(
-        () => {
-            return thumbnail ? URL.createObjectURL(thumbnail) : null
-        },
-        [thumbnail]
-    )
+		event.preventDefault()
 
-    async function handleSubmit(event){
+		let data = new FormData()
 
-        setLoadingState(true)
+		data.set('thumbnail', thumbnail)
+		data.set('word', word)
+		data.set('video', video)
 
-        event.preventDefault()
+		data.set('old_image', previous_image)
 
-        let data = new FormData()
+		await api.post('/dictionary/edit/' + id, data)
 
-        data.set("thumbnail", thumbnail)
-        data.set("word", word)
-        data.set("video", video)
-        
-        data.set("old_image", previous_image)
-        
-        await api.post('/dictionary/edit/' + id, data)
+		history.push('/dictionary/')
+	}
 
-        history.push('/dictionary/')
-    }
+	return (
+		<form onSubmit={handleSubmit}>
+			<label
+				id='thumbnail'
+				style={{
+					backgroundImage: thumbnail
+						? `url(${preview})`
+						: `url(${previous_image})`,
+				}}
+				className={''}>
+				<input
+					type='file'
+					onChange={(event) => setThumbnail(event.target.files[0])}
+				/>
+				<img src={camera} alt='Select img' />
+			</label>
 
-    return (
-        <form onSubmit={handleSubmit}>
-            <label 
-            id="thumbnail" 
-            style={{backgroundImage: thumbnail ? `url(${preview})` : `url(${previous_image})`}}
-            className= {''}
-            >
-                <input type="file" onChange={event => setThumbnail(event.target.files[0])} />       
-                <img src={camera} alt="Select img"/>
+			<label htmlFor='statement'>Vídeo</label>
+			<input
+				id='video'
+				placeholder='Link do youtube da palavra em LIBRAS'
+				value={video}
+				onChange={(event) => setVideo(event.target.value)}
+			/>
 
-            </label>
+			<label htmlFor='statement'>Palavra *</label>
+			<input
+				id='word'
+				placeholder='A palavra em português'
+				value={word}
+				onChange={(event) => setWord(event.target.value)}
+			/>
+			<label htmlFor='meaning'>Significado</label>
+			<input
+				id='meaning'
+				placeholder='O significado em português'
+				value={meaning}
+				onChange={(event) => setMeaning(event.target.value)}
+			/>
 
-
-            <label htmlFor="statement">Vídeo</label>
-            <input id='video'
-            placeholder='Link do youtube da palavra em LIBRAS'
-            value={video}
-            onChange = {event => setVideo(event.target.value)}
-            />
-
-            <label htmlFor="statement">Palavra *</label>
-            <input id='word'
-            placeholder='A palavra em português'
-            value={word}
-            onChange = {event => setWord(event.target.value)}
-            />
-            <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
-                { loadingState ? "Atualizando . . ."  : "Atualizar" }
-            </button>
-        </form>
-    )
+			<button
+				type='submit'
+				className='btn'
+				disabled={loadingState ? true : false}>
+				{loadingState ? 'Atualizando . . .' : 'Atualizar'}
+			</button>
+		</form>
+	)
 }

@@ -394,7 +394,9 @@ export default function EditActivity({ history }) {
 
 					<Form.Label
 						className='thumbnail'
-						style={{ backgroundImage: alternative_text_edit }}>
+						style={{
+							backgroundImage: `url(${alternative_thumbnail_edit})`,
+						}}>
 						<input
 							type='file'
 							onChange={(event) =>

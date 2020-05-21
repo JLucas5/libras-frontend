@@ -1,5 +1,6 @@
 import React from 'react';
 import { Switch, Route } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 import '../../App.css';
 
 import 'bootstrap/dist/css/bootstrap.min.css';
@@ -7,6 +8,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Nav from 'react-bootstrap/Nav'
 import { NavDropdown } from 'react-bootstrap';
 
+import Home from '../Home';
 import DictionaryList from '../Dictionary_List';
 import LibraryList from '../Library_List';
 import ModuleList from '../Module_List';
@@ -22,6 +24,14 @@ import ViewModule from '../View_Module';
 
 
 export default function Panel(){
+    const history = useHistory();
+
+    async function logout(e){
+        e.preventDefault();
+        localStorage.clear();
+        history.push('/');
+    }
+
     return(
         <div>
             <Navbar sticky="top" collapseOnSelect expand="lg">
@@ -35,14 +45,14 @@ export default function Panel(){
                 <NavDropdown.Item href="/panel/library/music">Músicas</NavDropdown.Item>
                 <NavDropdown.Item href="/panel/library/book">Livros</NavDropdown.Item>
                 </NavDropdown>
-                <Nav.Link href="/">Sair</Nav.Link>
+                <Nav.Link href="/" onClick={logout}>Sair</Nav.Link>
             </Navbar.Collapse>
             </Navbar>
 
             <div className="container">
-            <h1>Bem-vindo ao Painel Administrativo!</h1> 
                 <div className="content">
                     <Switch>
+                        <Route path='/panel' exact component={Home}/>
                         <Route path='/panel/activities/new/:id' exact component={NewActivity} />
                         <Route path='/panel/activity/edit/:id'component={EditActivity} />
                     

@@ -10,7 +10,7 @@ function App() {
 	return (
 		<div>
 			<Navbar sticky='top' collapseOnSelect expand='lg'>
-				<Navbar.Brand href='/home'>Painel EduLIBRAS</Navbar.Brand>
+				<Navbar.Brand href='/home'>Painel EduLibras</Navbar.Brand>
 				<Navbar.Toggle aria-controls='responsive-navbar-nav' />
 				<Navbar.Collapse id='responsive-navbar-nav'>
 					<Nav.Link href='/module'>Módulos</Nav.Link>

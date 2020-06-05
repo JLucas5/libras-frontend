@@ -14,6 +14,8 @@ import EditLibraryItem from './pages/Edit_Library_Item'
 import EditModule from './pages/Edit_Module'
 import ViewModule from './pages/View_Module'
 import AboutUs from './pages/AboutUs'
+import EditAboutUs from './pages/Edit_AboutUs'
+import NewAboutUs from './pages/New_AboutUs'
 
 export default function Routes() {
 	return (
@@ -45,6 +47,8 @@ export default function Routes() {
 				<Route path='/library/:type' exact component={LibraryList} />
 
 				<Route path='/aboutus' exact component={AboutUs} />
+				<Route path='/aboutus/edit/:id' exact component={EditAboutUs} />
+				<Route path='/aboutus/new' exact component={NewAboutUs} />
 			</Switch>
 		</BrowserRouter>
 	)

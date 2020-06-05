@@ -44,6 +44,7 @@ export default function EditDictionaryItem({ history }) {
 		data.set('thumbnail', thumbnail)
 		data.set('word', word)
 		data.set('video', video)
+		data.set('meaning', meaning)
 
 		data.set('old_image', previous_image)
 

@@ -78,7 +78,9 @@ export default function NewAboutUs({ history }) {
 				name='priority'
 				min='0'
 				max='100'
-				value={priority}></input>
+				value={priority}
+				onChange={(event) => setPriority(event.target.value)}></input>
+
 			<button
 				type='submit'
 				className='btn'

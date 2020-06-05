@@ -15,6 +15,7 @@ export default function NewAboutUs({ history }) {
 	const [title, setTitle] = useState('')
 	const [link, setLink] = useState('')
 	const [text, setText] = useState('')
+	const [priority, setPriority] = useState(0)
 
 	useEffect(() => {
 		async function loadActivities() {
@@ -23,6 +24,7 @@ export default function NewAboutUs({ history }) {
 			setTitle(response.data.title)
 			setText(response.data.text)
 			setLink(response.data.link)
+			setPriority(response.data.priority)
 		}
 
 		loadActivities()
@@ -38,6 +40,7 @@ export default function NewAboutUs({ history }) {
 		data.set('title', title)
 		data.set('link', link)
 		data.set('text', text)
+		data.set('priority', priority)
 
 		await api.post('/aboutus/edit/' + id, data)
 
@@ -68,7 +71,14 @@ export default function NewAboutUs({ history }) {
 				value={link}
 				onChange={(event) => setLink(event.target.value)}
 			/>
-
+			<label for='priority'>Prioridade (0-100):</label>
+			<input
+				type='number'
+				id='priority'
+				name='priority'
+				min='0'
+				max='100'
+				value={priority}></input>
 			<button
 				type='submit'
 				className='btn'

@@ -11,6 +11,7 @@ export default function NewAboutUs({ history }) {
 
 	const [title, setTitle] = useState('')
 	const [link, setLink] = useState('')
+	const [priority, setPriority] = useState(0)
 	const [text, setText] = useState('')
 
 	async function handleSubmit(event) {
@@ -23,6 +24,7 @@ export default function NewAboutUs({ history }) {
 		data.set('title', title)
 		data.set('link', link)
 		data.set('text', text)
+		data.set('priority', priority)
 
 		await api.post('/aboutus/create', data)
 
@@ -54,7 +56,14 @@ export default function NewAboutUs({ history }) {
 				value={link}
 				onChange={(event) => setLink(event.target.value)}
 			/>
-
+			<label for='priority'>Prioridade (0-100):</label>
+			<input
+				type='number'
+				id='priority'
+				name='priority'
+				min='0'
+				max='100'
+				value={priority}></input>
 			<button
 				type='submit'
 				className='btn'

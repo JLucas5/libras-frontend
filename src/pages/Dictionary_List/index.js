@@ -25,7 +25,7 @@ export default function DictionaryList() {
 
 	return (
 		<>
-			<h1>DICIONÁRIO</h1>
+			<h1>Dicionário</h1>
 			<Link to={'/dictionary/new'}>
 				<button className='btn'>Cadastrar novo item</button>
 			</Link>

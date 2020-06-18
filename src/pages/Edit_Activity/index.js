@@ -345,14 +345,6 @@ export default function EditActivity({ history }) {
 						/>
 						<img src={camera} alt='Select img' />
 					</Form.Label>
-
-					<Form.Check
-						label='Alternativa correta?'
-						onChange={(event) => {
-							setCorrect_answer(!correct_answer)
-						}}
-						id='checkbox'
-					/>
 				</Modal.Body>
 				<Modal.Footer>
 					<Button variant='secondary' onClick={handleCloseNew}>

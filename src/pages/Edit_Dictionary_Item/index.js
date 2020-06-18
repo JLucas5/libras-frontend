@@ -25,6 +25,7 @@ export default function EditDictionaryItem({ history }) {
 			setPrevious_image(response.data.location)
 			setWord(response.data.word)
 			setVideo(response.data.video)
+			setMeaning(response.data.meaning)
 		}
 
 		loadActivities()

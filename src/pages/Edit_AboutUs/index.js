@@ -85,7 +85,7 @@ export default function NewAboutUs({ history }) {
 				type='submit'
 				className='btn'
 				disabled={loadingState ? true : false}>
-				{loadingState ? 'Cadastrando . . .' : 'Cadastrar'}
+				{loadingState ? 'Salvando . . .' : 'Atualizar'}
 			</button>
 		</form>
 	)

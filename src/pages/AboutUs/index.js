@@ -29,7 +29,7 @@ export default function EditAboutUs() {
 
 	return (
 		<>
-			<h1>SOBRE NÓS</h1>
+			<h1>Sobre Nós</h1>
 			<Link to={'/aboutus/new'}>
 				<button className='btn'>Cadastrar novo item</button>
 			</Link>

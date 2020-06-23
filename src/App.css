@@ -14,7 +14,7 @@ body,
 }
 
 body {
-	background: rgb(0, 0, 0) url('./assets/background.png') no-repeat;
+	background: rgb(0, 0, 0) url('./assets/background.jpg') no-repeat;
 	background-size: cover;
 	-webkit-font-smoothing: antialiased !important;
 }
@@ -38,7 +38,7 @@ button {
 
 .content {
 	width: 100%;
-	background: #ffffef;
+	background: #fffff9;
 	margin-top: 50px;
 	border-radius: 4px;
 	padding: 30px;

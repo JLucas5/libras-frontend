@@ -11,7 +11,7 @@ const Login = () => {
 	const { currentUser } = useContext(AuthContext)
 
 	const uiConfig = {
-		signInFlow: "popup",
+		signInFlow: "redirect",
 		signInOptions: [firebase.auth.GoogleAuthProvider.PROVIDER_ID],
 	}
 

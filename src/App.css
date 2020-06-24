@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap');
+@import url("https://fonts.googleapis.com/css?family=Roboto:400,700&display=swap");
 
 * {
 	margin: 0;
@@ -14,7 +14,7 @@ body,
 }
 
 body {
-	background: rgb(0, 0, 0) url('./assets/background.jpg') no-repeat;
+	background: rgb(0, 0, 0) url("./assets/background.jpg") no-repeat;
 	background-size: cover;
 	-webkit-font-smoothing: antialiased !important;
 }
@@ -23,7 +23,7 @@ Nav,
 body,
 input,
 button {
-	font-family: 'Roboto', Arial, Helvetica, sans-serif;
+	font-family: "Roboto", Arial, Helvetica, sans-serif;
 	font-size: 14px;
 }
 
@@ -109,4 +109,9 @@ Nav {
 
 div.dropdown-menu {
 	background-color: rgba(255, 255, 255, 0.55);
+}
+
+.exit-button {
+	color: crimson;
+	right: 0;
 }

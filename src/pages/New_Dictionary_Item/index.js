@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react'
+import React, { useState, useMemo, useEffect } from 'react'
 
 import api from '../../services/api'
 
@@ -6,16 +6,27 @@ import camera from '../../assets/camera.svg'
 import './styles.css'
 
 export default function NewDictionaryItem({ history }) {
+	const youtubeLinkRegex = /(?: https ?: \/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w-_]+)/
+
 	const [loadingState, setLoadingState] = useState(false)
 
 	const [thumbnail, setThumbnail] = useState(null)
 	const [word, setWord] = useState('')
 	const [video, setVideo] = useState('')
 	const [meaning, setMeaning] = useState('')
+	const [isWrong, setIsWrong] = useState(false)
 
 	const preview = useMemo(() => {
 		return thumbnail ? URL.createObjectURL(thumbnail) : null
 	}, [thumbnail])
+
+	useEffect(() => {
+		if (video.match(youtubeLinkRegex) || video === '') {
+			setIsWrong(false)
+		} else {
+			setIsWrong(true)
+		}
+	}, [video])
 
 	async function handleSubmit(event) {
 		setLoadingState(true)
@@ -48,7 +59,11 @@ export default function NewDictionaryItem({ history }) {
 			</label>
 
 			<label htmlFor='statement'>Vídeo</label>
+			<p className='errorMsg' hidden={!isWrong}>
+				Insira um link válido para o youtube
+			</p>
 			<input
+				className={isWrong ? 'red' : ''}
 				id='video'
 				placeholder='Link do youtube da palavra em LIBRAS'
 				value={video}
@@ -72,7 +87,7 @@ export default function NewDictionaryItem({ history }) {
 			<button
 				type='submit'
 				className='btn'
-				disabled={loadingState ? true : false}>
+				disabled={loadingState || isWrong ? true : false}>
 				{loadingState ? 'Cadastrando . . .' : 'Cadastrar'}
 			</button>
 		</form>

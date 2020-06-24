@@ -7,6 +7,8 @@ import camera from '../../assets/camera.svg'
 import './styles.css'
 
 export default function EditDictionaryItem({ history }) {
+	const youtubeLinkRegex = /(?: https ?: \/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w-_]+)/
+
 	const { id } = useParams()
 
 	const [loadingState, setLoadingState] = useState(false)
@@ -17,6 +19,7 @@ export default function EditDictionaryItem({ history }) {
 	const [word, setWord] = useState('')
 	const [meaning, setMeaning] = useState('')
 	const [video, setVideo] = useState('')
+	const [isWrong, setIsWrong] = useState(false)
 
 	useEffect(() => {
 		async function loadActivities() {
@@ -30,6 +33,14 @@ export default function EditDictionaryItem({ history }) {
 
 		loadActivities()
 	}, [id])
+
+	useEffect(() => {
+		if (video.match(youtubeLinkRegex) || video === '') {
+			setIsWrong(false)
+		} else {
+			setIsWrong(true)
+		}
+	}, [video])
 
 	const preview = useMemo(() => {
 		return thumbnail ? URL.createObjectURL(thumbnail) : null
@@ -72,7 +83,11 @@ export default function EditDictionaryItem({ history }) {
 			</label>
 
 			<label htmlFor='statement'>Vídeo</label>
+			<p className='errorMsg' hidden={!isWrong}>
+				Insira um link válido para o youtube
+			</p>
 			<input
+				className={isWrong ? 'red' : ''}
 				id='video'
 				placeholder='Link do youtube da palavra em LIBRAS'
 				value={video}
@@ -97,7 +112,7 @@ export default function EditDictionaryItem({ history }) {
 			<button
 				type='submit'
 				className='btn'
-				disabled={loadingState ? true : false}>
+				disabled={loadingState || isWrong ? true : false}>
 				{loadingState ? 'Atualizando . . .' : 'Atualizar'}
 			</button>
 		</form>

@@ -5,86 +5,115 @@ import api from '../../services/api'
 
 import './styles.css'
 
+export default function EditLibraryItem({ history }) {
+	const youtubeLinkRegex = /(?: https ?: \/\/)?(?:www\.)?youtu\.?be(?:\.com)?\/?.*(?:watch|embed)?(?:.*v=|v\/|\/)([\w-_]+)/
 
-export default function EditLibraryItem( { history } ){
+	const { id } = useParams()
 
-    const { id } = useParams()
+	const [loadingState, setLoadingState] = useState(false)
 
-    const [ loadingState, setLoadingState ] = useState(false)
+	const [type, setType] = useState('')
+	const [file, setFile] = useState(null)
+	const [link, setLink] = useState('')
+	const [name, setName] = useState('')
+	const [isWrong, setIsWrong] = useState(false)
 
-    const [ type, setType ] = useState('')
-    const [ file, setFile ] = useState(null)
-    const [ link, setLink ] = useState('')
-    const [ name, setName ] = useState('')
+	useEffect(() => {
+		async function loadActivities() {
+			const response = await api.get('/library/' + id)
 
-    useEffect(()=> {
-        async function loadActivities(){
+			setType(response.data.type)
+			setLink(response.data.location)
+			setName(response.data.name)
+		}
 
-            const response = await api.get('/library/' + id)
+		loadActivities()
+	}, [id])
 
-            setType(response.data.type)
-            setLink(response.data.location)
-            setName(response.data.name)      
-        }
+	useEffect(() => {
+		if (link.match(youtubeLinkRegex) || link === '' || type === 'book') {
+			setIsWrong(false)
+		} else {
+			setIsWrong(true)
+		}
+	}, [link])
 
-        loadActivities()
-    }, [id] )
+	async function handleSubmit(event) {
+		setLoadingState(true)
 
-    async function handleSubmit(event){
+		event.preventDefault()
 
-        setLoadingState(true)
+		let data = new FormData()
 
-        event.preventDefault()
+		data.set('file', file)
+		data.set('name', name)
+		data.set('link', link)
 
-        let data = new FormData()
+		await api.post('/library/edit/' + id, data)
 
-        data.set("file", file)
-        data.set("name", name)
-        data.set("link", link)
-        
-        await api.post('/library/edit/' + id, data)
+		history.push('/library/' + type)
+	}
 
-        history.push('/library/' + type)
-    }
+	return (
+		<>
+			<h1 hidden={type !== 'video'}>Biblioteca - Editar Vídeo</h1>
+			<h1 hidden={type !== 'book'}>Biblioteca - Editar Livro</h1>
+			<h1 hidden={type !== 'music'}>Biblioteca - Editar Música</h1>
+			<form onSubmit={handleSubmit}>
+				<label htmlFor='statement'>Nome *</label>
+				<input
+					id='name'
+					placeholder='Nome do conteúdo'
+					value={name}
+					onChange={(event) => setName(event.target.value)}
+					required
+				/>
 
-    return (
-        <>
-            <h1 hidden={ type !== 'video' }>Biblioteca - Editar Vídeo</h1>
-            <h1 hidden={ type !== 'book' }>Biblioteca - Editar Livro</h1>
-            <h1 hidden={ type !== 'music' }>Biblioteca - Editar Música</h1>
-            <form onSubmit={handleSubmit}>
-                
-                <label htmlFor="statement" >Nome *</label>
-                <input id='name'
-                placeholder='Nome do conteúdo'
-                value={name}
-                onChange = {event => setName(event.target.value)}
-                required
-                />
+				<label htmlFor='link' hidden={type === 'book'}>
+					Link do conteúdo *
+				</label>
+				<p className='errorMsg' hidden={!isWrong}>
+					Insira um link válido para o youtube
+				</p>
+				<input
+					className={isWrong ? 'red' : ''}
+					id='link'
+					placeholder='Link do Youtube'
+					value={link}
+					onChange={(event) => setLink(event.target.value)}
+					hidden={type === 'book'}
+					disabled={type === 'book'}
+					required
+				/>
 
-                <label htmlFor="link" hidden={ type === 'book' } >Link do conteúdo *</label>
-                <input id='link'
-                placeholder='Link do Youtube'
-                value={link}
-                onChange = {event => setLink(event.target.value)}
-                hidden={ type === 'book' }
-                disabled={ type === 'book' }
-                required
-                />
+				<label htmlFor='file' hidden={type !== 'book'}>
+					Arquivo PDF
+				</label>
+				<a
+					id='btn'
+					className='btn'
+					href={link}
+					target='_blank'
+					rel='noopener noreferrer'
+					hidden={type !== 'book'}>
+					{' '}
+					Ver arquivo atual
+				</a>
+				<input
+					type='file'
+					onChange={(event) => setFile(event.target.files[0])}
+					hidden={type !== 'book'}
+					disabled={type !== 'book'}
+					required
+				/>
 
-                <label htmlFor="file" hidden={ type !== 'book' } >Arquivo PDF</label>
-                <a id='btn'className="btn" href={link} target='_blank'rel="noopener noreferrer" hidden={ type !== 'book' } > Ver arquivo atual</a>
-                <input type="file"  
-                onChange={event => setFile(event.target.files[0])} 
-                hidden={ type !== 'book' } 
-                disabled={ type !== 'book' }
-                required/>
-
-
-                <button type ='submit' className="btn" disabled= { loadingState ? true : false } >
-                    { loadingState ? "Atualizando . . ."  : "Atualizar" }
-                </button>
-            </form>
-        </>
-    )
+				<button
+					type='submit'
+					className='btn'
+					disabled={loadingState || isWrong ? true : false}>
+					{loadingState ? 'Atualizando . . .' : 'Atualizar'}
+				</button>
+			</form>
+		</>
+	)
 }

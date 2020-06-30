@@ -109,7 +109,6 @@ export default function EditLibraryItem({ history }) {
 					onChange={(event) => setFile(event.target.files[0])}
 					hidden={type !== "book"}
 					disabled={type !== "book"}
-					required
 				/>
 
 				<label htmlFor="statement">Fonte *</label>

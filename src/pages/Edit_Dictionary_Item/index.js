@@ -73,6 +73,7 @@ export default function EditDictionaryItem({ history }) {
 
 			<label htmlFor='statement'>Vídeo</label>
 			<input
+				type="url"
 				id='video'
 				placeholder='Link do youtube da palavra em LIBRAS'
 				value={video}

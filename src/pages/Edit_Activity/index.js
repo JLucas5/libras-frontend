@@ -1,5 +1,5 @@
 import React, { useState, useMemo } from 'react'
-import { useParams } from 'react-router-dom'
+import { useParams, useHistory } from 'react-router-dom'
 import 'bootstrap/dist/css/bootstrap.min.css'
 import Form from 'react-bootstrap/Form'
 import Row from 'react-bootstrap/Row'
@@ -54,6 +54,8 @@ export default function EditActivity({ history }) {
 			: null
 	}, [alternative_thumbnail])
 
+	const historyApp = useHistory();
+
 	useEffect(() => {
 		async function loadModule() {
 			let response = await api.get('/activities/' + activity_id)
@@ -72,22 +74,24 @@ export default function EditActivity({ history }) {
 	}, [activity_id])
 
 	async function handleSubmit(event) {
-		setLoadingState(true)
 
 		event.preventDefault()
 
-		let data = new FormData()
+			setLoadingState(true)
 
-		data.set('statement', statement)
-		data.set('thumbnail', thumbnail)
-		data.set('video', video)
-		data.set('pdf', pdf)
-		data.set('expected_answer', expected_answer)
+			let data = new FormData()
 
-		await api.post('/activities/update/' + activity_id, data)
+			data.set('statement', statement)
+			data.set('thumbnail', thumbnail)
+			data.set('video', video)
+			data.set('pdf', pdf)
+			data.set('expected_answer', expected_answer)
 
-		window.location.reload()
-	}
+			await api.post('/activities/update/' + activity_id, data)
+
+
+			historyApp.go(-2);
+  }
 
 	async function handleSave(event) {
 		setLoadingState(true)
@@ -151,25 +155,30 @@ export default function EditActivity({ history }) {
 				<Col>
 					<Row>
 						<Col>
-							<Form.Label>Enunciado em Português: *</Form.Label>
-							<Form.Control
-								id='statement'
-								placeholder='Qual, por que, como . . .'
-								value={statement}
-								onChange={(event) =>
-									setStatement(event.target.value)
-								}
-							/>
 
-							<Form.Label>Enunciado em LIBRAS (vídeo)</Form.Label>
-							<Form.Control
-								id='stetement_link'
-								placeholder='Link para o Youtube aqui'
-								value={video}
-								onChange={(event) =>
-									setVideo(event.target.value)
-								}
-							/>
+								<Form.Label>Enunciado em Português: *</Form.Label>
+								<Form.Control
+									required
+									type="text"
+									placeholder='Qual, por que, como . . .'
+									id='statement' 
+									value={statement}
+									onChange={(event) =>
+										setStatement(event.target.value)
+									}
+								/>
+							
+
+								<Form.Label>Enunciado em LIBRAS (vídeo)</Form.Label>
+								<Form.Control
+									id='stetement_link'
+									placeholder='Link para o Youtube aqui'
+									value={video}
+									onChange={(event) =>
+										setVideo(event.target.value)
+									}
+								/>
+
 
 							<label htmlFor='file'>Arquivo PDF</label>
 							<a

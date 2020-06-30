@@ -19,7 +19,6 @@ export default function ModuleList({ history }){
     }, [] )
   
     function openModule(id){
-
         history.push("/module/view/" + id)
     }
     return (

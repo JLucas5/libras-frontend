@@ -142,10 +142,12 @@ export default function EditActivity({ history }) {
 	const handleShowEdit = () => setEditAltModal(true)
 	const handleCloseEdit = () => setEditAltModal(false)
 
+	let title = window.location.href.split('title=')[1]
+
 	return (
 		<>
 			<Row>
-				<h1>Editar Atividade</h1>
+				<h1>{title} Atividade</h1>
 			</Row>
 			<Row>
 				<Col>

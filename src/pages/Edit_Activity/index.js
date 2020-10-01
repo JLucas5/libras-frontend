@@ -229,7 +229,7 @@ export default function EditActivity({ history }) {
 				</Col>
 				<Col hidden={activity.type === 'sub'}>
 					<Row>
-						<h2 style={{ 'margin-left': '10%' }}>Alternativas</h2>
+						<h2 style={{ 'marginLeft': '10%' }}>Alternativas</h2>
 					</Row>
 					<Row>
 						<Col>
@@ -254,7 +254,7 @@ export default function EditActivity({ history }) {
 												name='correctAlternative'
 												value={alternative._id}
 												id=''
-												checked={
+												defaultChecked={
 													alternative._id ===
 													expected_answer
 												}

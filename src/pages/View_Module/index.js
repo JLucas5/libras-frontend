@@ -71,7 +71,7 @@ export default function ViewModule( { history }){
                                 <td> 
                                     <Row > 
                                         <Col md={7}> {activity.statement}</Col>
-                                        <Col md={2}><Link to={"/activity/edit/" + activity._id}><button className='editaratv'>  Editar  </button></Link></Col>
+                                        <Col md={2}><Link to={"/activity/edit/" + activity._id + "?title=Editar"}><button className='editaratv'>  Editar  </button></Link></Col>
                                         <Col md={2}><button className='excluiratv' onClick={event => deleteActivity(activity._id)}>  Excluir  </button></Col>
                                         <Col md={1}></Col>
                                     </Row>

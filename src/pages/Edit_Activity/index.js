@@ -37,10 +37,8 @@ export default function EditActivity({ history }) {
 	const [correct_answer_edit, setCorrect_answer_edit] = useState(false)
 	const [alternative_text_edit, setAlternative_text_edit] = useState('')
 
-	const [
-		alternative_thumbnail_edit,
-		setAlternative_thumbnail_edit,
-	] = useState(null)
+	const [alternative_thumbnail_edit, setAlternative_thumbnail_edit] = useState(null)
+	const [alternative_thumbnail_edit_old, setAlternative_thumbnail_edit_old] = useState('')
 
 	const { id: activity_id } = useParams()
 
@@ -53,6 +51,12 @@ export default function EditActivity({ history }) {
 			? URL.createObjectURL(alternative_thumbnail)
 			: null
 	}, [alternative_thumbnail])
+
+	const alternative_preview_edit = useMemo(() => {
+		return alternative_thumbnail_edit
+			? URL.createObjectURL(alternative_thumbnail_edit)
+			: null
+	}, [alternative_thumbnail_edit])
 
 	useEffect(() => {
 		async function loadModule() {
@@ -127,7 +131,7 @@ export default function EditActivity({ history }) {
 
 	function editAlternative(alternative) {
 		setAlternative_text_edit(alternative.text)
-		setAlternative_thumbnail_edit(alternative.thumbnail)
+		setAlternative_thumbnail_edit_old(alternative.location)
 		setCorrect_answer_edit(alternative.correct_answer)
 		setAlternative_edit(alternative._id)
 		setAlternative_video_edit(alternative.video)
@@ -388,7 +392,9 @@ export default function EditActivity({ history }) {
 					<Form.Label
 						className='thumbnail'
 						style={{
-							backgroundImage: `url(${alternative_thumbnail_edit})`,
+							backgroundImage: alternative_preview_edit
+										? `url(${alternative_preview_edit})`
+										: `url(${alternative_thumbnail_edit_old})`,
 						}}>
 						<input
 							type='file'

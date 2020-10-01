@@ -15,14 +15,17 @@ export const AuthProvider = ({ children }) => {
 			setPending(false)
 		})
 	}, [])
+
 	useEffect(() => {
-		if (currentUser && !list.includes(currentUser.email))
+		if (currentUser && !list.includes(currentUser.email)){
 			app.auth().signOut()
+		}
 	}, [currentUser])
 
 	if (pending) {
-		return <>Loading...</>
+		return <>Carregando...</>
 	}
+
 	return (
 		<AuthContext.Provider value={{ currentUser }}>
 			{children}

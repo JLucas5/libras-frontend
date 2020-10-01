@@ -122,7 +122,6 @@ export default function EditActivity({ history }) {
 
 		await api.post('/alternative/edit/' + alternative_id, data)
 
-		console.log('oiii')
 		window.location.reload()
 	}
 

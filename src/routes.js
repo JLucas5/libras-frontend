@@ -27,6 +27,7 @@ export default function Routes() {
 				<Switch>
 					<Route path="/" exact component={Login} />
 					<Route path="/login" exact component={Login} />
+
 					<PrivateRoute
 						path="/activities/new/:id"
 						exact

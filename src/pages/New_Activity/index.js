@@ -8,7 +8,7 @@ import { Row, Col } from 'react-bootstrap'
 
 export default function ActivityList({ history }){
 
-    const { id, title } = useParams()
+    const { id } = useParams()
 
     async function toObjective(){
 

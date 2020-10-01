@@ -47,7 +47,7 @@ export default function EditLibraryItem({ history }) {
 		event.preventDefault()
 
 		let data = new FormData()
-
+		
 		data.set("file", file)
 		data.set("name", name)
 		data.set("link", link)
@@ -104,6 +104,7 @@ export default function EditLibraryItem({ history }) {
 					{" "}
 					Ver arquivo atual
 				</a>
+
 				<input
 					type="file"
 					onChange={(event) => setFile(event.target.files[0])}

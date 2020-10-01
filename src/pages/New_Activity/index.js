@@ -6,7 +6,7 @@ import api from '../../services/api'
 import './styles.css'
 import { Row, Col } from 'react-bootstrap'
 
-export default function ActivityList({ history  }){
+export default function ActivityList({ history }){
 
     const { id } = useParams()
 
@@ -18,7 +18,7 @@ export default function ActivityList({ history  }){
         data.set("module_id", id)
         const response = await api.post('/activities/new', data)
 
-        history.push('/activity/edit/' + response.data._id)
+        history.push('/activity/edit/' + response.data._id + "?title=Nova")
     }
 
     async function toSubjective(){
@@ -29,7 +29,7 @@ export default function ActivityList({ history  }){
         data.set("module_id", id)
         const response = await api.post('/activities/new', data)
 
-        history.push('/activity/edit/' + response.data._id)
+        history.push('/activity/edit/' + response.data._id + "?title=Nova")
     }
 
     return (

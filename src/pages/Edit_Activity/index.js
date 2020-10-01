@@ -37,10 +37,8 @@ export default function EditActivity({ history }) {
 	const [correct_answer_edit, setCorrect_answer_edit] = useState(false)
 	const [alternative_text_edit, setAlternative_text_edit] = useState('')
 
-	const [
-		alternative_thumbnail_edit,
-		setAlternative_thumbnail_edit,
-	] = useState(null)
+	const [alternative_thumbnail_edit, setAlternative_thumbnail_edit] = useState(null)
+	const [alternative_thumbnail_edit_old, setAlternative_thumbnail_edit_old] = useState('')
 
 	const { id: activity_id } = useParams()
 
@@ -53,6 +51,12 @@ export default function EditActivity({ history }) {
 			? URL.createObjectURL(alternative_thumbnail)
 			: null
 	}, [alternative_thumbnail])
+
+	const alternative_preview_edit = useMemo(() => {
+		return alternative_thumbnail_edit
+			? URL.createObjectURL(alternative_thumbnail_edit)
+			: null
+	}, [alternative_thumbnail_edit])
 
 	useEffect(() => {
 		async function loadModule() {
@@ -122,13 +126,12 @@ export default function EditActivity({ history }) {
 
 		await api.post('/alternative/edit/' + alternative_id, data)
 
-		console.log('oiii')
 		window.location.reload()
 	}
 
 	function editAlternative(alternative) {
 		setAlternative_text_edit(alternative.text)
-		setAlternative_thumbnail_edit(alternative.thumbnail)
+		setAlternative_thumbnail_edit_old(alternative.location)
 		setCorrect_answer_edit(alternative.correct_answer)
 		setAlternative_edit(alternative._id)
 		setAlternative_video_edit(alternative.video)
@@ -142,10 +145,12 @@ export default function EditActivity({ history }) {
 	const handleShowEdit = () => setEditAltModal(true)
 	const handleCloseEdit = () => setEditAltModal(false)
 
+	let title = window.location.href.split('title=')[1]
+
 	return (
 		<>
 			<Row>
-				<h1>Editar Atividade</h1>
+				<h1>{title} Atividade</h1>
 			</Row>
 			<Row>
 				<Col>
@@ -227,7 +232,7 @@ export default function EditActivity({ history }) {
 				</Col>
 				<Col hidden={activity.type === 'sub'}>
 					<Row>
-						<h2 style={{ 'margin-left': '10%' }}>Alternativas</h2>
+						<h2 style={{ 'marginLeft': '10%' }}>Alternativas</h2>
 					</Row>
 					<Row>
 						<Col>
@@ -252,7 +257,7 @@ export default function EditActivity({ history }) {
 												name='correctAlternative'
 												value={alternative._id}
 												id=''
-												checked={
+												defaultChecked={
 													alternative._id ===
 													expected_answer
 												}
@@ -387,7 +392,9 @@ export default function EditActivity({ history }) {
 					<Form.Label
 						className='thumbnail'
 						style={{
-							backgroundImage: `url(${alternative_thumbnail_edit})`,
+							backgroundImage: alternative_preview_edit
+										? `url(${alternative_preview_edit})`
+										: `url(${alternative_thumbnail_edit_old})`,
 						}}>
 						<input
 							type='file'

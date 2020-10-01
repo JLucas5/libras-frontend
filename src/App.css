@@ -110,3 +110,8 @@ Nav {
 div.dropdown-menu {
 	background-color: rgba(255, 255, 255, 0.55);
 }
+
+.exit-button {
+	color: crimson;
+	right: 0;
+}

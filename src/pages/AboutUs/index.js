@@ -29,6 +29,8 @@ export default function EditAboutUs() {
 
 	return (
 		<>
+
+		<div>
 			<h1>Sobre Nós</h1>
 			<Link to={'/aboutus/new'}>
 				<button className='btn'>Cadastrar novo item</button>
@@ -55,6 +57,7 @@ export default function EditAboutUs() {
 					</li>
 				))}
 			</ul>
+		</div>
 		</>
 	)
 }

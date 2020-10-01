@@ -1,55 +1,97 @@
-import React from 'react'
-import { BrowserRouter, Switch, Route } from 'react-router-dom'
+import React from "react"
+import { BrowserRouter, Switch, Route } from "react-router-dom"
+import PrivateRoute from "./PrivateRoute"
+import { AuthProvider } from "./Auth"
 
-import DictionaryList from './pages/Dictionary_List'
-import LibraryList from './pages/Library_List'
-import ModuleList from './pages/Module_List'
-import NewActivity from './pages/New_Activity'
-import EditActivity from './pages/Edit_Activity'
-import NewDictionaryItem from './pages/New_Dictionary_Item'
-import NewLibraryItem from './pages/New_Library_Item'
-import NewModule from './pages/New_Module'
-import EditDictionaryItem from './pages/Edit_Dictionary_Item'
-import EditLibraryItem from './pages/Edit_Library_Item'
-import EditModule from './pages/Edit_Module'
-import ViewModule from './pages/View_Module'
-import AboutUs from './pages/AboutUs'
-import EditAboutUs from './pages/Edit_AboutUs'
-import NewAboutUs from './pages/New_AboutUs'
+import DictionaryList from "./pages/Dictionary_List"
+import LibraryList from "./pages/Library_List"
+import ModuleList from "./pages/Module_List"
+import NewActivity from "./pages/New_Activity"
+import EditActivity from "./pages/Edit_Activity"
+import NewDictionaryItem from "./pages/New_Dictionary_Item"
+import NewLibraryItem from "./pages/New_Library_Item"
+import NewModule from "./pages/New_Module"
+import EditDictionaryItem from "./pages/Edit_Dictionary_Item"
+import EditLibraryItem from "./pages/Edit_Library_Item"
+import EditModule from "./pages/Edit_Module"
+import ViewModule from "./pages/View_Module"
+import AboutUs from "./pages/AboutUs"
+import EditAboutUs from "./pages/Edit_AboutUs"
+import NewAboutUs from "./pages/New_AboutUs"
+import Login from "./pages/Login"
 
 export default function Routes() {
 	return (
-		<BrowserRouter>
-			<Switch>
-				<Route path='/' exact component={ModuleList} />
-				<Route
-					path='/activities/new/:id'
-					exact
-					component={NewActivity}
-				/>
-				<Route path='/activity/edit/:id' component={EditActivity} />
+		<AuthProvider>
+			<BrowserRouter>
+				<Switch>
+					<Route path="/" exact component={Login} />
+					<Route path="/login" exact component={Login} />
+					<PrivateRoute
+						path="/activities/new/:id"
+						exact
+						component={NewActivity}
+					/>
+					<PrivateRoute
+						path="/activity/edit/:id"
+						component={EditActivity}
+					/>
 
-				<Route path='/dictionary' exact component={DictionaryList} />
-				<Route
-					path='/dictionary/edit/:id'
-					exact
-					component={EditDictionaryItem}
-				/>
-				<Route path='/dictionary/new' component={NewDictionaryItem} />
+					<PrivateRoute
+						path="/dictionary"
+						exact
+						component={DictionaryList}
+					/>
+					<PrivateRoute
+						path="/dictionary/edit/:id"
+						exact
+						component={EditDictionaryItem}
+					/>
+					<PrivateRoute
+						path="/dictionary/new"
+						component={NewDictionaryItem}
+					/>
 
-				<Route path='/module' exact component={ModuleList} />
-				<Route path='/module/new' component={NewModule} />
-				<Route path='/module/edit/:id' exact component={EditModule} />
-				<Route path='/module/view/:id' exact component={ViewModule} />
+					<PrivateRoute path="/module" exact component={ModuleList} />
+					<PrivateRoute path="/module/new" component={NewModule} />
+					<PrivateRoute
+						path="/module/edit/:id"
+						exact
+						component={EditModule}
+					/>
+					<PrivateRoute
+						path="/module/view/:id"
+						exact
+						component={ViewModule}
+					/>
 
-				<Route path='/library/new/:type' component={NewLibraryItem} />
-				<Route path='/library/edit/:id' component={EditLibraryItem} />
-				<Route path='/library/:type' exact component={LibraryList} />
+					<PrivateRoute
+						path="/library/new/:type"
+						component={NewLibraryItem}
+					/>
+					<PrivateRoute
+						path="/library/edit/:id"
+						component={EditLibraryItem}
+					/>
+					<PrivateRoute
+						path="/library/:type"
+						exact
+						component={LibraryList}
+					/>
 
-				<Route path='/aboutus' exact component={AboutUs} />
-				<Route path='/aboutus/edit/:id' exact component={EditAboutUs} />
-				<Route path='/aboutus/new' exact component={NewAboutUs} />
-			</Switch>
-		</BrowserRouter>
+					<PrivateRoute path="/aboutus" exact component={AboutUs} />
+					<PrivateRoute
+						path="/aboutus/edit/:id"
+						exact
+						component={EditAboutUs}
+					/>
+					<PrivateRoute
+						path="/aboutus/new"
+						exact
+						component={NewAboutUs}
+					/>
+				</Switch>
+			</BrowserRouter>
+		</AuthProvider>
 	)
 }
